@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffa726</color>
+    <color name="colorPrimaryDark">#c77800</color>
+    <color name="colorLight">#ffd95b</color>
+    <color name="colorAccent">#E53935</color>
+    <color name="toolbarBgTint">#E6E4E4</color>
+    <color name="toolbarFgTint">#313131</color>
+    <color name="editTextColor">#e9eced</color>
+    <color name="editTextStroke">#444344</color>
+</resources>
