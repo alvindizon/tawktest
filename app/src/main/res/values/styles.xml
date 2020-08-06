@@ -14,4 +14,9 @@
         <item name="android:layout_gravity">center</item>
     </style>
 
+    <style name="ProfileTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
 </resources>

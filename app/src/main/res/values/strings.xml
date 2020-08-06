@@ -5,4 +5,11 @@
     <string name="notes">Notes:</string>
     <string name="add_notes">Add notes here</string>
     <string name="save">Save</string>
+    <string name="followers">Followers: </string>
+    <string name="following">Following: </string>
+    <string name="name">"Name: "</string>
+    <string name="location">"Location: "</string>
+    <string name="saving_note">Saving note to DB…</string>
+    <string name="note_saved">Note successfully saved.</string>
+    <string name="note_error">Error saving note.</string>
 </resources>
