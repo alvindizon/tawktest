@@ -46,6 +46,14 @@ class ProfileActivity : AppCompatActivity() {
         observeProfileUI()
 
         observeDb()
+
+        fetchNotesIfAny()
+    }
+
+    private fun fetchNotesIfAny() {
+        viewModel.fetchNotesIfAny(userName).observe(this, Observer {
+            binding.editNotes.setText(it)
+        })
     }
 
     private fun getExtrasFromIntent() {

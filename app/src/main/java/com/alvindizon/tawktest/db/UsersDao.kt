@@ -24,4 +24,7 @@ abstract class UsersDao {
     @Query("SELECT EXISTS(SELECT * FROM userDb WHERE username LIKE :username)")
     abstract fun checkIfUserExists(username: String): Boolean
 
+    @Query("SELECT note FROM userDb WHERE username LIKE :username")
+    abstract fun getNoteByUserName(username: String): Single<String>
+
 }

@@ -64,5 +64,18 @@ class ProfileViewModel @Inject constructor(private val githubApi: GithubApi, pri
         )
     }
 
+    fun fetchNotesIfAny(userName: String): LiveData<String> {
+        val note = MutableLiveData<String>()
+        compositeDisposable.add(dao.getNoteByUserName(userName)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy(
+                onSuccess = { note.value = it },
+                onError = { it.printStackTrace() }
+            )
+        )
+        return note
+    }
+
 
 }
