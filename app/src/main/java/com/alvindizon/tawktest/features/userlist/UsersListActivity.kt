@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alvindizon.tawktest.R
 import com.alvindizon.tawktest.core.Const
 import com.alvindizon.tawktest.databinding.ActivityUsersListBinding
@@ -66,25 +66,37 @@ class UsersListActivity : AppCompatActivity() {
     }
 
     private fun initUsersList() {
-        val decoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
-        binding.list.addItemDecoration(decoration)
-
-        binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
-            header = RetryAdapter {
-                adapter.retry()
-            },
-            footer = RetryAdapter {
-                adapter.retry()
-            }
-        )
+        // Apply the following settings to our recyclerview
+        binding.list.run{
+            setAdapter(adapter.withLoadStateHeaderAndFooter(
+                header = RetryAdapter {
+                    adapter.retry()
+                },
+                footer = RetryAdapter {
+                    adapter.retry()
+                }
+            ))
+            setLayoutManager(LinearLayoutManager(this@UsersListActivity))
+            addVeiledItems(20)
+        }
 
         adapter.addLoadStateListener { loadState ->
-            // Only show the list if refresh succeeds.
-            binding.list.isVisible = loadState.source.refresh is LoadState.NotLoading
-            // Show loading spinner during initial load or refresh.
-            binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+            // Unveil the list if refresh succeeds
+            if(loadState.source.refresh is LoadState.NotLoading) {
+                // Uncomment if you want to add a noticeable delay, in order to see the shimmer effect
+//                Handler().postDelayed({
+//                    binding.list.unVeil()
+//                }, 3000)
+                binding.list.unVeil()
+            }
+            // Shimmer during initial load or refresh
+            if(loadState.source.refresh is LoadState.Loading) {
+                binding.list.veil()
+            }
             // Show the retry state if initial load or refresh fails.
             binding.retryButton.isVisible = loadState.source.refresh is LoadState.Error
+            // On error, make the list invisible
+            binding.list.isVisible = loadState.source.refresh !is LoadState.Error
 
             val errorState = loadState.source.append as? LoadState.Error
                 ?: loadState.source.prepend as? LoadState.Error

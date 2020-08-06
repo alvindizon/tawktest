@@ -8,4 +8,6 @@
     <color name="toolbarFgTint">#313131</color>
     <color name="editTextColor">#e9eced</color>
     <color name="editTextStroke">#444344</color>
+    <color name="shimmerBase0">#c2c2c2</color>
+    <color name="shimmerHighlight0">#ffffff</color>
 </resources>

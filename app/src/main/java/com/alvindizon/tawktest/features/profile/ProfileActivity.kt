@@ -1,9 +1,8 @@
 package com.alvindizon.tawktest.features.profile
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -90,12 +89,14 @@ class ProfileActivity : AppCompatActivity() {
         viewModel.uiState?.observe(this, Observer {
             when(it) {
                 LOADING -> {
-                    binding.profileDetails.layout.visibility = View.INVISIBLE
-                    binding.progressBar.show()
+                    binding.profileDetails.detailVeilLayoutBody.veil()
                 }
                 else -> {
-                    binding.progressBar.hide()
-                    binding.profileDetails.layout.visibility = View.VISIBLE
+                    // Uncomment if you want to add a noticeable delay, in order to see the shimmer effect
+//                    Handler().postDelayed({
+//                        binding.profileDetails.detailVeilLayoutBody.unVeil()
+//                    }, 3000)
+                    binding.profileDetails.detailVeilLayoutBody.unVeil()
                 }
             }
         })
