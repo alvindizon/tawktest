@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alvindizon.tawktest.R
 import com.alvindizon.tawktest.databinding.ItemRetryBinding
 
+// this adapter displays a progress indicator and a retry button. this is meant to be used as a footer/header
 class RetryAdapter (private val retry: () -> Unit) : LoadStateAdapter<RetryAdapter.RetryViewHolder>() {
     override fun onBindViewHolder(holder: RetryViewHolder, loadState: LoadState) {
         holder.bind(loadState)

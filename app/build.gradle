@@ -94,6 +94,7 @@ dependencies {
 
     // Paging
     implementation "androidx.paging:paging-runtime:3.0.0-alpha03"
+    implementation 'androidx.paging:paging-rxjava2:3.0.0-alpha03'
 
     implementation 'jp.wasabeef:glide-transformations:4.1.0'
     // If you want to use the GPU Filters

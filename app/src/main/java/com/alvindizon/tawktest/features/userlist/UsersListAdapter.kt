@@ -2,6 +2,7 @@ package com.alvindizon.tawktest.features.userlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -16,9 +17,10 @@ import jp.wasabeef.glide.transformations.gpu.InvertFilterTransformation
 class UsersListItem(
     var url: String,
     var userName: String,
+    var avatarUrl: String,
     var hasNote: Boolean) {
     override fun toString(): String {
-        return "UsersListItem(url='$url', userName='$userName', hasNote=$hasNote)"
+        return "UsersListItem(url='$url', userName='$userName', avatarUrl='$avatarUrl', hasNote=$hasNote)"
     }
 }
 
@@ -43,17 +45,20 @@ class UsersListAdapter(val listener: (UsersListItem) -> Unit, val viewModel: Use
             binding.viewModel = viewModel
 
             var builder = Glide.with(binding.image)
-                .load(binding.url)
+                .load(item.avatarUrl)
                 .thumbnail(0.33f)
                 .centerCrop()
 
-            if(position % 4 == 0) {
+            if((position + 1) % 4 == 0) {
                 builder = builder.apply(bitmapTransform(InvertFilterTransformation()))
             }
 
             builder.into(binding.image)
+
+            binding.imgNotes.isVisible = item.hasNote
         }
     }
+
 
     // note: the value for viewType here comes from getItemViewType
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -63,9 +68,11 @@ class UsersListAdapter(val listener: (UsersListItem) -> Unit, val viewModel: Use
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        getItem(position)?.let {
-            holder.bind(it, position)
-            listener(it)
+        getItem(position)?.let { item ->
+            holder.bind(item, position)
+            holder.itemView.setOnClickListener {
+                listener(item)
+            }
         }
     }
 
@@ -73,3 +80,4 @@ class UsersListAdapter(val listener: (UsersListItem) -> Unit, val viewModel: Use
         return R.layout.item_user
     }
 }
+
