@@ -26,13 +26,10 @@ class GithubPagingSource @Inject constructor(private val githubApi: GithubApi, p
             .map<LoadResult<Int, UsersListItem>> { item ->
                 LoadResult.Page(
                     data = item,
-                    prevKey = if (id == GITHUB_STARTING_USER_IDX) null else id - 1,
-                    nextKey = id + 1
+                    prevKey = if (id == GITHUB_STARTING_USER_IDX) null else id - PAGE_SIZE,
+                    nextKey =  if (item.isEmpty()) null else id + PAGE_SIZE
                 )
             }
             .onErrorReturn { e -> LoadResult.Error(e) }
     }
-
-    override val keyReuseSupported: Boolean
-        get() = true
 }
