@@ -22,12 +22,11 @@ class UsersListViewModel (private val getUsersUseCase: GetUsersUseCase) : BaseVi
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy (
                 onNext = { data ->
-                    filter?.let{
-                        data.filterSync {
+                    if(filter != null) {
+                        _uiState.value = data.filterSync {
                             it.userName.contains(filter)
                         }
-                    }
-                    _uiState.value = data
+                    } else _uiState.value = data
                 },
                 onError = {
                     it.printStackTrace()
