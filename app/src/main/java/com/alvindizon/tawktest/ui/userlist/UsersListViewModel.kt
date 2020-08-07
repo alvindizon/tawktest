@@ -15,13 +15,19 @@ class UsersListViewModel @Inject constructor(private val pagingProvider: PagingP
     private val _uiState =  MutableLiveData<PagingData<UsersListItem>>()
     val uiState: LiveData<PagingData<UsersListItem>>? get() = _uiState
 
-    fun fetchUsers() {
+    // applies a filter to loaded items if search term is not null
+    fun fetchUsers(filter: String?) {
         compositeDisposable.add(pagingProvider.providePagedList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy (
-                onNext = {
-                    _uiState.value = it
+                onNext = { data ->
+                    filter?.let{
+                        data.filterSync {
+                            it.userName.contains(filter)
+                        }
+                    }
+                    _uiState.value = data
                 },
                 onError = {
                     it.printStackTrace()

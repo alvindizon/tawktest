@@ -5,12 +5,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.alvindizon.tawktest.R
 import com.alvindizon.tawktest.core.Const
 import com.alvindizon.tawktest.databinding.ActivityUsersListBinding
 import com.alvindizon.tawktest.di.InjectorUtils
@@ -30,9 +29,58 @@ class UsersListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         InjectorUtils.getAppComponent().inject(this)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_users_list)
+        binding = ActivityUsersListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         viewModel = ViewModelProvider(this, viewModelFactory).get(UsersListViewModel::class.java)
 
+        initUsersList()
+
+        setupSearchToolbar()
+
+        setupRetryButton()
+
+        observeUi()
+    }
+
+    private fun observeUi() {
+        // observe any changes to PagingData emitted by VM and submit new PagingData to adapter
+        viewModel.uiState?.observe(this, Observer {
+            adapter.submitData(lifecycle, it)
+        })
+    }
+
+    private fun setupRetryButton() {
+        binding.retryButton.setOnClickListener {
+            adapter.retry()
+        }
+    }
+
+    private fun setupSearchToolbar() {
+        // if search field is not empty, search for username among loaded items
+        binding.search.setOnClickListener {
+            val search = binding.editUsername.text.trim().toString()
+            if (search.isNotEmpty()) {
+                viewModel.fetchUsers(search)
+            }
+        }
+
+        // if user clears search, trigger a new fetch for all users
+        binding.editUsername.addTextChangedListener(
+            afterTextChanged = {
+                if (it.isNullOrBlank()) viewModel.fetchUsers(null)
+            }
+        )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // list all users initially AND after ProfileActivity finishes so that note icons are properly displayed
+        viewModel.fetchUsers(null)
+    }
+
+    private fun initUsersList() {
+        // Add a click listener for each list item, and pass ViewModel to the adapter
         adapter = UsersListAdapter({
             val intent = Intent(this, ProfileActivity::class.java)
             intent.putExtra(Const.USERNAME_KEY, it.userName)
@@ -41,31 +89,6 @@ class UsersListActivity : AppCompatActivity() {
             startActivity(intent)
         }, viewModel)
 
-        initUsersList()
-
-        binding.search.setOnClickListener {
-            if(binding.editUsername.text.trim().isEmpty()) {
-                // TODO filter search results locally by username/note contents
-            }
-        }
-
-        binding.retryButton.setOnClickListener {
-            adapter.retry()
-        }
-
-        // observe any changes with the PagingData for our PagingAdapter
-        viewModel.uiState?.observe(this, Observer {
-            adapter.submitData(lifecycle, it)
-        })
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // list all users initially
-        viewModel.fetchUsers()
-    }
-
-    private fun initUsersList() {
         // Apply the following settings to our recyclerview
         binding.list.run{
             setAdapter(adapter.withLoadStateHeaderAndFooter(
@@ -80,6 +103,7 @@ class UsersListActivity : AppCompatActivity() {
             addVeiledItems(20)
         }
 
+        // Add a listener for the current state of paging
         adapter.addLoadStateListener { loadState ->
             // Unveil the list if refresh succeeds
             if(loadState.source.refresh is LoadState.NotLoading) {
