@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "userDb", indices = arrayOf(Index(value = ["username"],  unique = true)))
 class GithubUser (
     var username: String,
-    var note: String?
+    var note: String
 ) {
     @PrimaryKey(autoGenerate = true)
     var uid = 0
