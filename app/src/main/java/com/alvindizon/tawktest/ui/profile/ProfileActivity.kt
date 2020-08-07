@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alvindizon.tawktest.R
 import com.alvindizon.tawktest.core.Const
+import com.alvindizon.tawktest.core.extraNotNull
 import com.alvindizon.tawktest.databinding.ActivityProfileBinding
 import com.alvindizon.tawktest.di.InjectorUtils
 import com.bumptech.glide.Glide
@@ -18,9 +19,9 @@ class ProfileActivity : AppCompatActivity() {
 
     private lateinit var viewModel: ProfileViewModel
 
-    private lateinit var userName: String
+    private val userName by extraNotNull<String>(Const.USERNAME_KEY)
 
-    private lateinit var avatarUrl: String
+    private val avatarUrl by extraNotNull<String>(Const.AVATAR_URL_KEY)
 
     @Inject
     lateinit var viewModelFactory: ProfileVMFactory
@@ -32,8 +33,6 @@ class ProfileActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(ProfileViewModel::class.java)
 
         setupDataBinding()
-
-        getExtrasFromIntent()
 
         setupProfileUi()
 
@@ -64,15 +63,12 @@ class ProfileActivity : AppCompatActivity() {
 
         // fetch  user details via GET /users/{username}
         viewModel.fetchUserDetails(userName)
+
         // fetch notes for user if it exists in the DB
         viewModel.fetchNotesIfAny(userName).observe(this, Observer {
             binding.editNotes.setText(it)
         })
-    }
 
-    private fun getExtrasFromIntent() {
-        userName = intent.extras?.getString(Const.USERNAME_KEY)!!
-        avatarUrl = intent.extras?.getString(Const.AVATAR_URL_KEY)!!
     }
 
     private fun setupDataBinding() {
