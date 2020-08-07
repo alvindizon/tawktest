@@ -1,4 +1,4 @@
-package com.alvindizon.tawktest.networking.model
+package com.alvindizon.tawktest.data.networking.model
 import com.squareup.moshi.JsonClass
 
 import com.squareup.moshi.Json

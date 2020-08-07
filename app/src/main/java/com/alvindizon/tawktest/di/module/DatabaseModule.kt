@@ -2,8 +2,8 @@ package com.alvindizon.tawktest.di.module
 
 import android.content.Context
 import androidx.room.Room
-import com.alvindizon.tawktest.db.UsersDao
-import com.alvindizon.tawktest.db.UsersDb
+import com.alvindizon.tawktest.data.db.UsersDao
+import com.alvindizon.tawktest.data.db.UsersDb
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

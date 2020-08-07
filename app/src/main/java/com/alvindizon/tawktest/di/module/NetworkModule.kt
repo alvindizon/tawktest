@@ -1,8 +1,8 @@
 package com.alvindizon.tawktest.di.module
 
 import com.alvindizon.tawktest.BuildConfig
-import com.alvindizon.tawktest.networking.api.GithubApi
-import com.alvindizon.tawktest.networking.interceptor.ConnectivityInterceptor
+import com.alvindizon.tawktest.data.networking.api.GithubApi
+import com.alvindizon.tawktest.data.networking.interceptor.ConnectivityInterceptor
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides

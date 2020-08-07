@@ -1,9 +1,9 @@
-package com.alvindizon.tawktest.features.profile
+package com.alvindizon.tawktest.ui.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.alvindizon.tawktest.db.UsersDao
-import com.alvindizon.tawktest.networking.api.GithubApi
+import com.alvindizon.tawktest.data.db.UsersDao
+import com.alvindizon.tawktest.data.networking.api.GithubApi
 import javax.inject.Inject
 import javax.inject.Singleton
 

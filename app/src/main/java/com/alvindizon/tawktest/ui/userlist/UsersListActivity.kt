@@ -1,4 +1,4 @@
-package com.alvindizon.tawktest.features.userlist
+package com.alvindizon.tawktest.ui.userlist
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,7 +14,7 @@ import com.alvindizon.tawktest.R
 import com.alvindizon.tawktest.core.Const
 import com.alvindizon.tawktest.databinding.ActivityUsersListBinding
 import com.alvindizon.tawktest.di.InjectorUtils
-import com.alvindizon.tawktest.features.profile.ProfileActivity
+import com.alvindizon.tawktest.ui.profile.ProfileActivity
 import javax.inject.Inject
 
 class UsersListActivity : AppCompatActivity() {

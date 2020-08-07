@@ -1,4 +1,4 @@
-package com.alvindizon.tawktest.networking.interceptor
+package com.alvindizon.tawktest.data.networking.interceptor
 
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities

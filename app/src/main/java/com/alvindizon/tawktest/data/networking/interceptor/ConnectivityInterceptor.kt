@@ -1,7 +1,6 @@
-package com.alvindizon.tawktest.networking.interceptor
+package com.alvindizon.tawktest.data.networking.interceptor
 
-import com.alvindizon.tawktest.networking.exception.NoNetworkException
-import com.alvindizon.tawktest.networking.interceptor.LiveNetworkMonitor
+import com.alvindizon.tawktest.data.networking.exception.NoNetworkException
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException

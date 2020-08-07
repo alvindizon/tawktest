@@ -1,4 +1,4 @@
-package com.alvindizon.tawktest.networking.exception
+package com.alvindizon.tawktest.data.networking.exception
 
 import java.io.IOException
 

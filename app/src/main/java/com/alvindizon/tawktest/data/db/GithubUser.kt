@@ -1,4 +1,4 @@
-package com.alvindizon.tawktest.db
+package com.alvindizon.tawktest.data.db
 
 import androidx.room.Entity
 import androidx.room.Index

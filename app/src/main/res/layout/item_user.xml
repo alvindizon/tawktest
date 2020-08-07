@@ -6,10 +6,10 @@
     <data>
         <variable
             name="viewModel"
-            type="com.alvindizon.tawktest.features.userlist.UsersListViewModel" />
+            type="com.alvindizon.tawktest.ui.userlist.UsersListViewModel" />
         <variable
             name="model"
-            type="com.alvindizon.tawktest.features.userlist.UsersListItem" />
+            type="com.alvindizon.tawktest.ui.userlist.UsersListItem" />
         <import type="android.view.View"/>
     </data>
 

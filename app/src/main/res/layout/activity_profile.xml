@@ -8,13 +8,13 @@
     <data>
         <variable
             name="viewModel"
-            type="com.alvindizon.tawktest.features.profile.ProfileViewModel" />
+            type="com.alvindizon.tawktest.ui.profile.ProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".features.userlist.UsersListActivity"
+        tools:context=".ui.userlist.UsersListActivity"
         android:fitsSystemWindows="true">
 
         <androidx.appcompat.widget.Toolbar

@@ -1,9 +1,9 @@
-package com.alvindizon.tawktest.networking.paging
+package com.alvindizon.tawktest.data.paging
 
 import androidx.paging.rxjava2.RxPagingSource
-import com.alvindizon.tawktest.db.UsersDao
-import com.alvindizon.tawktest.features.userlist.UsersListItem
-import com.alvindizon.tawktest.networking.api.GithubApi
+import com.alvindizon.tawktest.data.db.UsersDao
+import com.alvindizon.tawktest.ui.userlist.UsersListItem
+import com.alvindizon.tawktest.data.networking.api.GithubApi
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject

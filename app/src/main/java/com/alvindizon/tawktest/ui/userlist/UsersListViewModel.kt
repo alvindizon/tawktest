@@ -1,10 +1,10 @@
-package com.alvindizon.tawktest.features.userlist
+package com.alvindizon.tawktest.ui.userlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagingData
 import com.alvindizon.tawktest.core.ui.BaseViewModel
-import com.alvindizon.tawktest.networking.paging.PagingProvider
+import com.alvindizon.tawktest.data.paging.PagingProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers

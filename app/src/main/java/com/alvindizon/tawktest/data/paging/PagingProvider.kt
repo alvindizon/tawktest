@@ -1,11 +1,10 @@
-package com.alvindizon.tawktest.networking.paging
+package com.alvindizon.tawktest.data.paging
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.rxjava2.observable
-import com.alvindizon.tawktest.features.userlist.UsersListItem
-import com.alvindizon.tawktest.networking.model.Item
+import com.alvindizon.tawktest.ui.userlist.UsersListItem
 import io.reactivex.Observable
 import javax.inject.Inject
 

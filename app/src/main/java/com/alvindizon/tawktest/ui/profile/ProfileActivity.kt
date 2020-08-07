@@ -1,4 +1,4 @@
-package com.alvindizon.tawktest.features.profile
+package com.alvindizon.tawktest.ui.profile
 
 import android.os.Bundle
 import android.widget.Toast

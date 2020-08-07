@@ -1,7 +1,7 @@
-package com.alvindizon.tawktest.networking.api
+package com.alvindizon.tawktest.data.networking.api
 
-import com.alvindizon.tawktest.networking.model.Item
-import com.alvindizon.tawktest.networking.model.SearchUserResponse
+import com.alvindizon.tawktest.data.networking.model.Item
+import com.alvindizon.tawktest.data.networking.model.SearchUserResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Headers

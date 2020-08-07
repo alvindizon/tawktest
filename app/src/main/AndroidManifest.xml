@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".TawkTestApp">
-        <activity android:name=".features.userlist.UsersListActivity">
+        <activity android:name=".ui.userlist.UsersListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".features.profile.ProfileActivity"/>
+        <activity android:name=".ui.profile.ProfileActivity"/>
     </application>
 
 </manifest>

@@ -1,12 +1,12 @@
-package com.alvindizon.tawktest.features.profile
+package com.alvindizon.tawktest.ui.profile
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.alvindizon.tawktest.core.ui.BaseViewModel
-import com.alvindizon.tawktest.db.GithubUser
-import com.alvindizon.tawktest.db.UsersDao
-import com.alvindizon.tawktest.networking.api.GithubApi
+import com.alvindizon.tawktest.data.db.GithubUser
+import com.alvindizon.tawktest.data.db.UsersDao
+import com.alvindizon.tawktest.data.networking.api.GithubApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers

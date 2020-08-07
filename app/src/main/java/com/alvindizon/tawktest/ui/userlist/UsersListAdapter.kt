@@ -1,4 +1,4 @@
-package com.alvindizon.tawktest.features.userlist
+package com.alvindizon.tawktest.ui.userlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
