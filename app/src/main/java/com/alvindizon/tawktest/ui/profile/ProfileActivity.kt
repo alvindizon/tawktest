@@ -1,5 +1,7 @@
 package com.alvindizon.tawktest.ui.profile
 
+import android.app.Activity
+import android.app.Instrumentation
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -98,7 +100,10 @@ class ProfileActivity : AppCompatActivity() {
         viewModel.dbState?.observe(this, Observer {
             when(it) {
                 DB_SAVING -> Toast.makeText(this@ProfileActivity, R.string.saving_note, Toast.LENGTH_SHORT).show()
-                NOTE_SAVED -> Toast.makeText(this@ProfileActivity, R.string.note_saved, Toast.LENGTH_SHORT).show()
+                NOTE_SAVED -> {
+                    Toast.makeText(this@ProfileActivity, R.string.note_saved, Toast.LENGTH_SHORT).show()
+                    setResult(Activity.RESULT_OK)
+                }
                 is DB_ERROR -> Toast.makeText(this@ProfileActivity, R.string.note_error, Toast.LENGTH_SHORT).show()
             }
         })

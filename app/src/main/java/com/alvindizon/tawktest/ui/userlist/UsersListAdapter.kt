@@ -26,7 +26,7 @@ class UsersListItem(
 
 class UserDiff: DiffUtil.ItemCallback<UsersListItem>() {
     override fun areItemsTheSame(oldItem: UsersListItem, newItem: UsersListItem): Boolean {
-        return oldItem.url == newItem.url
+        return oldItem.url == newItem.url && oldItem.hasNote == newItem.hasNote
     }
 
     override fun areContentsTheSame(oldItem: UsersListItem, newItem: UsersListItem): Boolean {

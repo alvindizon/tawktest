@@ -1,7 +1,11 @@
 package com.alvindizon.tawktest.ui.userlist
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -14,6 +18,8 @@ import com.alvindizon.tawktest.core.Const
 import com.alvindizon.tawktest.databinding.ActivityUsersListBinding
 import com.alvindizon.tawktest.di.InjectorUtils
 import com.alvindizon.tawktest.ui.profile.ProfileActivity
+import com.bumptech.glide.Glide
+import java.io.File
 import javax.inject.Inject
 
 class UsersListActivity : AppCompatActivity() {
@@ -41,6 +47,16 @@ class UsersListActivity : AppCompatActivity() {
         setupRetryButton()
 
         observeUi()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK) {
+            // refresh items if note was saved successfully in ProfileActivity
+            if(requestCode == Const.USER_REQ_CODE) {
+                viewModel.getUsers(null)
+            }
+        }
     }
 
     private fun observeUi() {
@@ -73,11 +89,6 @@ class UsersListActivity : AppCompatActivity() {
         )
     }
 
-    override fun onResume() {
-        super.onResume()
-        // list all users initially AND after ProfileActivity finishes so that note icons are properly displayed
-        viewModel.getUsers(null)
-    }
 
     private fun initUsersList() {
         // Add a click listener for each list item, and pass ViewModel to the adapter
@@ -86,7 +97,7 @@ class UsersListActivity : AppCompatActivity() {
             intent.putExtra(Const.USERNAME_KEY, it.userName)
             intent.putExtra(Const.URL_KEY, it.url)
             intent.putExtra(Const.AVATAR_URL_KEY, it.avatarUrl)
-            startActivity(intent)
+            startActivityForResult(intent, Const.USER_REQ_CODE)
         }, viewModel)
 
         // Apply the following settings to our recyclerview
@@ -134,5 +145,8 @@ class UsersListActivity : AppCompatActivity() {
                 ).show()
             }
         }
+
+        // list all users initially
+        viewModel.getUsers(null)
     }
 }
