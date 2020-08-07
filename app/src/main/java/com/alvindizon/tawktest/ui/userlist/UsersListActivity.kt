@@ -61,14 +61,14 @@ class UsersListActivity : AppCompatActivity() {
         binding.search.setOnClickListener {
             val search = binding.editUsername.text.trim().toString()
             if (search.isNotEmpty()) {
-                viewModel.fetchUsers(search)
+                viewModel.getUsers(search)
             }
         }
 
         // if user clears search, trigger a new fetch for all users
         binding.editUsername.addTextChangedListener(
             afterTextChanged = {
-                if (it.isNullOrBlank()) viewModel.fetchUsers(null)
+                if (it.isNullOrBlank()) viewModel.getUsers(null)
             }
         )
     }
@@ -76,7 +76,7 @@ class UsersListActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         // list all users initially AND after ProfileActivity finishes so that note icons are properly displayed
-        viewModel.fetchUsers(null)
+        viewModel.getUsers(null)
     }
 
     private fun initUsersList() {

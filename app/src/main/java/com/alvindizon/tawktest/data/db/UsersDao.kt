@@ -21,7 +21,7 @@ abstract class UsersDao {
     @Query("SELECT * FROM userDb")
     abstract fun getAllUsers(): Single<List<GithubUser>>
 
-    @Query("SELECT EXISTS(SELECT * FROM userDb WHERE username LIKE :username)")
+    @Query("SELECT EXISTS(SELECT 1 FROM userDb WHERE username LIKE :username)")
     abstract fun checkIfUserExists(username: String): Boolean
 
     @Query("SELECT note FROM userDb WHERE username LIKE :username")

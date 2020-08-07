@@ -5,16 +5,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.alvindizon.tawktest.core.ui.BaseViewModel
 import com.alvindizon.tawktest.data.db.GithubUser
-import com.alvindizon.tawktest.data.db.UsersDao
-import com.alvindizon.tawktest.data.networking.api.GithubApi
+import com.alvindizon.tawktest.domain.GetNoteUseCase
+import com.alvindizon.tawktest.domain.InsertUserUseCase
+import com.alvindizon.tawktest.domain.SearchUserUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
-class ProfileViewModel @Inject constructor(private val githubApi: GithubApi, private val dao: UsersDao)
-    : BaseViewModel() {
+class ProfileViewModel (private val searchUserUseCase: SearchUserUseCase,
+    private val insertUserUseCase: InsertUserUseCase, private val getNoteUseCase: GetNoteUseCase)
+        : BaseViewModel() {
 
     private val _uiState = MutableLiveData<ProfileUIState>()
     val uiState: LiveData<ProfileUIState>? get() = _uiState
@@ -28,7 +29,7 @@ class ProfileViewModel @Inject constructor(private val githubApi: GithubApi, pri
     val location = ObservableField<String>()
 
     fun fetchUserDetails(userName: String) {
-        compositeDisposable += githubApi.searchForUser(userName)
+        compositeDisposable += searchUserUseCase.searchForUser(userName)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { _uiState.value = LOADING }
@@ -50,7 +51,7 @@ class ProfileViewModel @Inject constructor(private val githubApi: GithubApi, pri
     }
 
     fun saveNoteToDb(userName: String, note: String) {
-        compositeDisposable += dao.insert(GithubUser(userName, note))
+        compositeDisposable += insertUserUseCase.insert(GithubUser(userName, note))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { _dbState.value = DB_SAVING }
@@ -65,7 +66,7 @@ class ProfileViewModel @Inject constructor(private val githubApi: GithubApi, pri
 
     fun fetchNotesIfAny(userName: String): LiveData<String> {
         val note = MutableLiveData<String>()
-        compositeDisposable += dao.getNoteByUserName(userName)
+        compositeDisposable += getNoteUseCase.getNoteByUserName(userName)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
