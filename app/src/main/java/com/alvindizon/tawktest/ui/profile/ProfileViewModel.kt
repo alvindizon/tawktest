@@ -8,6 +8,7 @@ import com.alvindizon.tawktest.data.db.GithubUser
 import com.alvindizon.tawktest.data.db.UsersDao
 import com.alvindizon.tawktest.data.networking.api.GithubApi
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -27,7 +28,7 @@ class ProfileViewModel @Inject constructor(private val githubApi: GithubApi, pri
     val location = ObservableField<String>()
 
     fun fetchUserDetails(userName: String) {
-        compositeDisposable.add(githubApi.searchForUser(userName)
+        compositeDisposable += githubApi.searchForUser(userName)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { _uiState.value = LOADING }
@@ -46,11 +47,10 @@ class ProfileViewModel @Inject constructor(private val githubApi: GithubApi, pri
                     }
                 }
             )
-        )
     }
 
     fun saveNoteToDb(userName: String, note: String) {
-        compositeDisposable.add(dao.insert(GithubUser(userName, note))
+        compositeDisposable += dao.insert(GithubUser(userName, note))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { _dbState.value = DB_SAVING }
@@ -61,19 +61,17 @@ class ProfileViewModel @Inject constructor(private val githubApi: GithubApi, pri
                     it.printStackTrace()
                 }
             )
-        )
     }
 
     fun fetchNotesIfAny(userName: String): LiveData<String> {
         val note = MutableLiveData<String>()
-        compositeDisposable.add(dao.getNoteByUserName(userName)
+        compositeDisposable += dao.getNoteByUserName(userName)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onSuccess = { note.value = it },
                 onError = { it.printStackTrace() }
             )
-        )
         return note
     }
 

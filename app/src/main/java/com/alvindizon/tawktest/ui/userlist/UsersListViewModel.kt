@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import com.alvindizon.tawktest.core.ui.BaseViewModel
 import com.alvindizon.tawktest.data.paging.PagingProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -17,7 +18,7 @@ class UsersListViewModel @Inject constructor(private val pagingProvider: PagingP
 
     // applies a filter to loaded items if search term is not null
     fun fetchUsers(filter: String?) {
-        compositeDisposable.add(pagingProvider.providePagedList()
+        compositeDisposable += pagingProvider.providePagedList()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy (
@@ -33,6 +34,5 @@ class UsersListViewModel @Inject constructor(private val pagingProvider: PagingP
                     it.printStackTrace()
                 }
             )
-        )
     }
 }
