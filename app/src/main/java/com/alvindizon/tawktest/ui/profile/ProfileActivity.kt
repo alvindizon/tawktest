@@ -35,22 +35,36 @@ class ProfileActivity : AppCompatActivity() {
 
         getExtrasFromIntent()
 
-        setupToolbar()
-
-        loadAvatar()
-
-        displayUserDetails()
-
-        setupSaveButton()
+        setupProfileUi()
 
         observeProfileUI()
 
         observeDb()
-
-        fetchNotesIfAny()
     }
 
-    private fun fetchNotesIfAny() {
+    private fun setupProfileUi() {
+        // setup toolbar
+        binding.toolbarTitle.text = userName
+        binding.toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
+        // setup save button
+        binding.save.setOnClickListener {
+            val notes = binding.editNotes.text.trim().toString()
+            if(notes.isNotEmpty()) {
+                viewModel.saveNoteToDb(userName, notes)
+            }
+        }
+
+        // load avatar via avatar URL
+        Glide.with(binding.avatar)
+            .load(avatarUrl)
+            .into(binding.avatar)
+
+        // fetch  user details via GET /users/{username}
+        viewModel.fetchUserDetails(userName)
+        // fetch notes for user if it exists in the DB
         viewModel.fetchNotesIfAny(userName).observe(this, Observer {
             binding.editNotes.setText(it)
         })
@@ -61,36 +75,10 @@ class ProfileActivity : AppCompatActivity() {
         avatarUrl = intent.extras?.getString(Const.AVATAR_URL_KEY)!!
     }
 
-    private fun setupSaveButton() {
-        binding.save.setOnClickListener {
-            val notes = binding.editNotes.text.trim().toString()
-            if(notes.isNotEmpty()) {
-                viewModel.saveNoteToDb(userName, notes)
-            }
-        }
-    }
-
     private fun setupDataBinding() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
         binding.executePendingBindings()
-    }
-
-    private fun setupToolbar() {
-        binding.toolbarTitle.text = userName
-        binding.toolbar.setNavigationOnClickListener {
-            finish()
-        }
-    }
-
-    private fun loadAvatar() {
-        Glide.with(binding.avatar)
-            .load(avatarUrl)
-            .into(binding.avatar)
-    }
-
-    private fun displayUserDetails() {
-        viewModel.fetchUserDetails(userName)
     }
 
     private fun observeProfileUI() {
