@@ -1,7 +1,7 @@
 package com.alvindizon.tawktest.ui.profile
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.alvindizon.tawktest.data.db.GithubUser
+import com.alvindizon.tawktest.any
 import com.alvindizon.tawktest.data.networking.model.SearchUserResponse
 import com.alvindizon.tawktest.domain.GetNoteUseCase
 import com.alvindizon.tawktest.domain.InsertUserUseCase
@@ -14,8 +14,6 @@ import io.reactivex.Single
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.ArgumentMatchers.any
-import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnit
@@ -83,9 +81,8 @@ class ProfileViewModelTest {
     @Test
     fun `saveNoteToDb - correct DB states`() {
         val dbStatus = SUT.dbState?.testObserver()
-        val githubUser = GithubUser("", "")
 
-        `when`(insertUserUseCase.insert(githubUser))
+        `when`(insertUserUseCase.insert(any()))
             .thenReturn(Completable.complete())
 
         SUT.saveNoteToDb("", "")
@@ -93,6 +90,19 @@ class ProfileViewModelTest {
         Truth.assert_()
             .that(dbStatus?.observedValues)
             .isEqualTo(listOf(DB_SAVING, NOTE_SAVED))
+    }
+
+    @Test
+    fun `fetchNotesIfAny - correct LiveData string returned`() {
+
+        `when`(getNoteUseCase.getNoteByUserName("username"))
+            .thenReturn(Single.just("note"))
+
+        val fetchNotesIfAny = SUT.fetchNotesIfAny("username").testObserver()
+
+        Truth.assert_()
+            .that(fetchNotesIfAny.observedValues[0])
+            .isEqualTo("note")
     }
 
 
