@@ -50,8 +50,8 @@ class ProfileViewModel (private val searchUserUseCase: SearchUserUseCase,
             )
     }
 
-    fun saveNoteToDb(userName: String, note: String) {
-        compositeDisposable += insertUserUseCase.insert(GithubUser(userName, note))
+    fun saveNoteToDb(userName: String, note: String, url: String, avatarUrl: String) {
+        compositeDisposable += insertUserUseCase.insert(GithubUser(userName, note, url, avatarUrl))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { _dbState.value = DB_SAVING }

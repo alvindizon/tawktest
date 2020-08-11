@@ -25,6 +25,8 @@ class ProfileActivity : AppCompatActivity() {
 
     private val avatarUrl by extraNotNull<String>(Const.AVATAR_URL_KEY)
 
+    private val url by extraNotNull<String>(Const.URL_KEY)
+
     @Inject
     lateinit var viewModelFactory: ProfileVMFactory
 
@@ -54,7 +56,7 @@ class ProfileActivity : AppCompatActivity() {
         binding.save.setOnClickListener {
             val notes = binding.editNotes.text.trim().toString()
             if(notes.isNotEmpty()) {
-                viewModel.saveNoteToDb(userName, notes)
+                viewModel.saveNoteToDb(userName, notes, url, avatarUrl)
             }
         }
 

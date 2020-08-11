@@ -17,7 +17,7 @@ class UsersDaoTest {
 
     // region constants
     companion object {
-        val SAMPLE = GithubUser("username", "note")
+        val SAMPLE = GithubUser("username", "note", "url", "avatarUrl")
     }
     // endregion constants
 

@@ -85,7 +85,7 @@ class ProfileViewModelTest {
         `when`(insertUserUseCase.insert(any()))
             .thenReturn(Completable.complete())
 
-        SUT.saveNoteToDb("", "")
+        SUT.saveNoteToDb("", "", "", "")
 
         val observedValues = dbStatus?.observedValues
         assertEquals(observedValues?.get(0), DB_SAVING)
@@ -123,7 +123,7 @@ class ProfileViewModelTest {
         `when`(insertUserUseCase.insert(any()))
             .thenReturn(Completable.error(Exception("error")))
 
-        SUT.saveNoteToDb("", "")
+        SUT.saveNoteToDb("", "", "", "")
 
         val observedValues = dbStatus?.observedValues
         assertEquals(observedValues?.get(0), DB_SAVING)
