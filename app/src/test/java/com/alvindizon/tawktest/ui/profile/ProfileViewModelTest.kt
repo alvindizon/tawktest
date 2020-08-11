@@ -8,9 +8,9 @@ import com.alvindizon.tawktest.domain.InsertUserUseCase
 import com.alvindizon.tawktest.domain.SearchUserUseCase
 import com.alvindizon.tawktest.ui.RxSchedulerRule
 import com.alvindizon.tawktest.ui.testObserver
-import com.google.common.truth.Truth
 import io.reactivex.Completable
 import io.reactivex.Single
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -73,9 +73,9 @@ class ProfileViewModelTest {
 
         SUT.fetchUserDetails("username")
 
-        Truth.assert_()
-            .that(uiStatus?.observedValues)
-            .isEqualTo(listOf(LOADING, SUCCESS))
+        val observedValues = uiStatus?.observedValues
+        assertEquals(observedValues?.get(0), LOADING)
+        assertEquals(observedValues?.get(1), SUCCESS)
     }
 
     @Test
@@ -87,9 +87,9 @@ class ProfileViewModelTest {
 
         SUT.saveNoteToDb("", "")
 
-        Truth.assert_()
-            .that(dbStatus?.observedValues)
-            .isEqualTo(listOf(DB_SAVING, NOTE_SAVED))
+        val observedValues = dbStatus?.observedValues
+        assertEquals(observedValues?.get(0), DB_SAVING)
+        assertEquals(observedValues?.get(1), NOTE_SAVED)
     }
 
     @Test
@@ -100,9 +100,45 @@ class ProfileViewModelTest {
 
         val fetchNotesIfAny = SUT.fetchNotesIfAny("username").testObserver()
 
-        Truth.assert_()
-            .that(fetchNotesIfAny.observedValues[0])
-            .isEqualTo("note")
+        assertEquals(fetchNotesIfAny.observedValues[0], "note")
+    }
+
+    @Test
+    fun `fetchUserDetails - error state emitted on use case error`() {
+        val uiStatus = SUT.uiState?.testObserver()
+
+        `when`(searchUserUseCase.searchForUser("username")).thenReturn(Single.error(Exception("error")))
+
+        SUT.fetchUserDetails("username")
+
+        val observedValues = uiStatus?.observedValues
+        assertEquals(observedValues?.get(0), LOADING)
+        assertEquals(observedValues?.get(1), ERROR("error"))
+    }
+
+    @Test
+    fun `saveNoteToDb - error state emitted on use case error`() {
+        val dbStatus = SUT.dbState?.testObserver()
+
+        `when`(insertUserUseCase.insert(any()))
+            .thenReturn(Completable.error(Exception("error")))
+
+        SUT.saveNoteToDb("", "")
+
+        val observedValues = dbStatus?.observedValues
+        assertEquals(observedValues?.get(0), DB_SAVING)
+        assertEquals(observedValues?.get(1), DB_ERROR("error"))
+    }
+
+    @Test
+    fun `fetchNotesIfAny - no String emitted on error`() {
+
+        `when`(getNoteUseCase.getNoteByUserName("username"))
+            .thenReturn(Single.error(Exception("error")))
+
+        val fetchNotesIfAny = SUT.fetchNotesIfAny("username").testObserver()
+
+        fetchNotesIfAny.observedValues.isEmpty().let { assert(it) }
     }
 
 
