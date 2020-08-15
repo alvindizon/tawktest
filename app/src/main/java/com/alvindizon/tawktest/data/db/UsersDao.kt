@@ -3,6 +3,7 @@ package com.alvindizon.tawktest.data.db
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -10,7 +11,7 @@ import io.reactivex.Single
 @Dao
 abstract class UsersDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insert(user: GithubUser): Completable
 
     @Insert
