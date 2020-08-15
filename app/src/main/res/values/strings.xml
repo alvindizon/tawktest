@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">tawktest</string>
     <string name="retry">Retry</string>
-    <string name="search_username">Search for user</string>
+    <string name="search_username_note">Search for user or note</string>
     <string name="notes">Notes:</string>
     <string name="add_notes">Add notes here</string>
     <string name="save">Save</string>

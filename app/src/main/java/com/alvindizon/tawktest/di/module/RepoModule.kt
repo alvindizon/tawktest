@@ -16,8 +16,8 @@ class RepoModule {
 
     @Provides
     @Singleton
-    fun provideUsersRepo(githubPagingSource: GithubPagingSource): UsersRepository
-            = UsersRepoImpl(githubPagingSource)
+    fun provideUsersRepo(githubPagingSource: GithubPagingSource, dao: UsersDao): UsersRepository
+            = UsersRepoImpl(githubPagingSource, dao)
 
 
     @Provides

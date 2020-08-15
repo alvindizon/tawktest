@@ -7,4 +7,6 @@ import io.reactivex.Observable
 interface UsersRepository {
 
     fun getUsers(): Observable<PagingData<UsersListItem>>
+
+    fun getUserByUserNameOrNote(filter: String): Observable<PagingData<UsersListItem>>
 }

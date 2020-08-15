@@ -1,5 +1,6 @@
 package com.alvindizon.tawktest.data.db
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -21,10 +22,13 @@ abstract class UsersDao {
     @Query("SELECT * FROM userDb")
     abstract fun getAllUsers(): Single<List<GithubUser>>
 
-    @Query("SELECT EXISTS(SELECT 1 FROM userDb WHERE username LIKE :username)")
-    abstract fun checkIfUserExists(username: String): Boolean
+    @Query("SELECT EXISTS(SELECT 1 FROM userDb WHERE username LIKE :userName)")
+    abstract fun checkIfUserExists(userName: String): Boolean
 
-    @Query("SELECT note FROM userDb WHERE username LIKE :username")
-    abstract fun getNoteByUserName(username: String): Single<String>
+    @Query("SELECT note FROM userDb WHERE username LIKE :userName")
+    abstract fun getNoteByUserName(userName: String): Single<String>
+
+    @Query("SELECT * FROM userDb WHERE note LIKE :filter OR userName LIKE :filter")
+    abstract fun getUserByUserNameOrNote(filter: String): PagingSource<Int, GithubUser>
 
 }

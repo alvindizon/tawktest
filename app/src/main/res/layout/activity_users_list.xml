@@ -30,7 +30,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".80"
-                android:hint="@string/search_username"
+                android:hint="@string/search_username_note"
                 android:inputType="textNoSuggestions"
                 android:maxLines="1"
                 android:textColor="@color/toolbarFgTint"

@@ -49,7 +49,7 @@ class UsersListActivity : AppCompatActivity() {
         if(resultCode == Activity.RESULT_OK) {
             // refresh items if note was saved successfully in ProfileActivity
             if(requestCode == Const.USER_REQ_CODE) {
-                viewModel.getUsers(null)
+                viewModel.getUsers()
             }
         }
     }
@@ -68,18 +68,19 @@ class UsersListActivity : AppCompatActivity() {
     }
 
     private fun setupSearchToolbar() {
+        setSupportActionBar(binding.historyToolbar)
         // if search field is not empty, search for username among loaded items
         binding.search.setOnClickListener {
             val search = binding.editUsername.text.trim().toString()
             if (search.isNotEmpty()) {
-                viewModel.getUsers(search)
+                viewModel.searchUserOrNote(search)
             }
         }
 
         // if user clears search, trigger a new fetch for all users
         binding.editUsername.addTextChangedListener(
             afterTextChanged = {
-                if (it.isNullOrBlank()) viewModel.getUsers(null)
+                if (it.isNullOrBlank()) viewModel.getUsers()
             }
         )
     }
@@ -142,6 +143,6 @@ class UsersListActivity : AppCompatActivity() {
         }
 
         // list all users initially
-        viewModel.getUsers(null)
+        viewModel.getUsers()
     }
 }

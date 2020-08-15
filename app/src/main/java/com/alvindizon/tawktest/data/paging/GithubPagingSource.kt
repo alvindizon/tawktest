@@ -1,15 +1,14 @@
 package com.alvindizon.tawktest.data.paging
 
 import androidx.paging.rxjava2.RxPagingSource
+import com.alvindizon.tawktest.core.Const.GITHUB_STARTING_USER_IDX
+import com.alvindizon.tawktest.core.Const.PAGE_SIZE
 import com.alvindizon.tawktest.data.db.UsersDao
 import com.alvindizon.tawktest.ui.userlist.UsersListItem
 import com.alvindizon.tawktest.data.networking.api.GithubApi
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
-
-private const val GITHUB_STARTING_USER_IDX = 0
-private const val PAGE_SIZE = 20
 
 class GithubPagingSource @Inject constructor(private val githubApi: GithubApi, private val dao: UsersDao)
     : RxPagingSource<Int, UsersListItem>(){
