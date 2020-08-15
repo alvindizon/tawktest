@@ -26,7 +26,7 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.25" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/image"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -41,14 +41,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.70" />
+            app:layout_constraintGuide_percent="0.75" />
 
         <TextView
             android:id="@+id/username"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
             android:text="@{model.userName}"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@id/text_guideline"
             app:layout_constraintStart_toEndOf="@id/img_guideline"
             app:layout_constraintTop_toTopOf="parent"
@@ -58,8 +60,10 @@
             android:id="@+id/url"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
+            android:layout_marginTop="16dp"
             android:text="@{model.url}"
+            android:textAlignment="center"
+            android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@id/text_guideline"
             app:layout_constraintStart_toEndOf="@id/img_guideline"
             app:layout_constraintTop_toBottomOf="@id/username"
@@ -68,7 +72,7 @@
         <ImageView
             android:id="@+id/img_notes"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:src="@drawable/ic_note"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
