@@ -11,9 +11,9 @@
         android:id="@+id/history_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
+        android:background="@color/color_primary"
         android:elevation="4dp"
-        android:foregroundTint="@color/toolbarFgTint"
+        android:foregroundTint="@color/toolbar_fg_tint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,19 +29,26 @@
                 android:id="@+id/edit_username"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".80"
+                android:layout_weight=".70"
                 android:hint="@string/search_username_note"
                 android:inputType="textNoSuggestions"
                 android:maxLines="1"
-                android:textColor="@color/toolbarFgTint"
-                android:textColorHint="@android:color/black" />
+                android:textColor="@color/color_on_surface"
+                android:textColorHint="@color/color_on_surface" />
 
             <ImageView
                 android:id="@+id/search"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight=".20"
+                android:layout_weight=".15"
                 android:src="@drawable/ic_search" />
+
+            <ImageView
+                android:id="@+id/night_mode"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".15"
+                tools:src="@drawable/ic_night" />
 
         </LinearLayout>
 
@@ -56,9 +63,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/history_toolbar"
         app:veilFrame_baseAlpha="0.6"
-        app:veilFrame_baseColor="@color/shimmerBase0"
+        app:veilFrame_baseColor="@color/shimmer_base_0"
         app:veilFrame_highlightAlpha="1.0"
-        app:veilFrame_highlightColor="@color/shimmerHighlight0"
+        app:veilFrame_highlightColor="@color/shimmer_highlight_0"
         app:veilFrame_layout="@layout/item_user"
         app:veilFrame_radius="4dp"
         app:veilFrame_shimmerEnable="true"

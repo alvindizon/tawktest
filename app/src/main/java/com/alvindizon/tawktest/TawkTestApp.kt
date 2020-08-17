@@ -1,6 +1,7 @@
 package com.alvindizon.tawktest
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode
 import com.alvindizon.tawktest.di.component.AppComponent
 import com.alvindizon.tawktest.di.component.DaggerAppComponent
 import com.alvindizon.tawktest.di.module.AppModule
@@ -23,5 +24,11 @@ class TawkTestApp: Application() {
         super.onCreate()
         INSTANCE = this
         appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
+        setNightMode()
+    }
+
+    private fun setNightMode() {
+        val prefsRepo = appComponent.prefsRepo()
+        setDefaultNightMode(prefsRepo.getNightMode())
     }
 }

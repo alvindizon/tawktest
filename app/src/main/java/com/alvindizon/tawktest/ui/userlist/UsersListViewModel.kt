@@ -2,7 +2,9 @@ package com.alvindizon.tawktest.ui.userlist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.rxjava2.cachedIn
 import com.alvindizon.tawktest.core.ui.BaseViewModel
 import com.alvindizon.tawktest.domain.GetUserByUserNameOrNote
 import com.alvindizon.tawktest.domain.GetUsersUseCase
@@ -19,6 +21,10 @@ class UsersListViewModel (private val getUsersUseCase: GetUsersUseCase,
 
     fun getUsers() {
         compositeDisposable += getUsersUseCase.getUsers()
+            // NOTE: we call cachedIn, because if we don't this happens if night/dark mode is toggled:
+            //    java.lang.IllegalStateException: Attempt to collect twice from pageEventFlow,
+            //    which is an illegal operation. Did you forget to call Flow<PagingData<*>>.cachedIn(coroutineScope)?
+            .cachedIn(viewModelScope)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy (
@@ -31,6 +37,7 @@ class UsersListViewModel (private val getUsersUseCase: GetUsersUseCase,
 
     fun searchUserOrNote(search: String) {
         compositeDisposable += getUserByUserNameOrNote.getUserByUserNameOrNote(search)
+            .cachedIn(viewModelScope)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy (

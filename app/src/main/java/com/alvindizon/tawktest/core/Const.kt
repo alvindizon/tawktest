@@ -7,4 +7,5 @@ object Const {
     const val USER_REQ_CODE = 2
     const val GITHUB_STARTING_USER_IDX = 0
     const val PAGE_SIZE = 20
+    const val KEY_NIGHT_MODE = "key_night_mode"
 }

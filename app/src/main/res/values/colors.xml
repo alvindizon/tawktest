@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ffa726</color>
-    <color name="colorPrimaryDark">#c77800</color>
-    <color name="colorLight">#ffd95b</color>
-    <color name="colorAccent">#E53935</color>
-    <color name="toolbarBgTint">#E6E4E4</color>
-    <color name="toolbarFgTint">#313131</color>
-    <color name="editTextColor">#e9eced</color>
-    <color name="editTextStroke">#444344</color>
-    <color name="shimmerBase0">#c2c2c2</color>
-    <color name="shimmerHighlight0">#ffffff</color>
+    <color name="color_primary">#ffa726</color>
+    <color name="color_primary_variant">#c77800</color>
+    <color name="color_secondary">#ffd95b</color>
+    <color name="color_secondary_variant">#E53935</color>
+    <color name="toolbar_bg_tint">#E6E4E4</color>
+    <color name="toolbar_fg_tint">#313131</color>
+    <color name="edit_text_color">#e9eced</color>
+    <color name="edit_text_stroke">#444344</color>
+    <color name="shimmer_base_0">#c2c2c2</color>
+    <color name="shimmer_highlight_0">#ffffff</color>
+    <color name="color_on_surface">#000000</color>
 </resources>

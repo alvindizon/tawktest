@@ -5,15 +5,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alvindizon.tawktest.R
 import com.alvindizon.tawktest.core.Const
 import com.alvindizon.tawktest.databinding.ActivityUsersListBinding
 import com.alvindizon.tawktest.di.InjectorUtils
+import com.alvindizon.tawktest.domain.PreferencesRepository
 import com.alvindizon.tawktest.ui.profile.ProfileActivity
 import javax.inject.Inject
 
@@ -26,6 +29,7 @@ class UsersListActivity : AppCompatActivity() {
 
     @Inject lateinit var viewModelFactory: UsersListVMFactory
 
+    @Inject lateinit var prefsRepo: PreferencesRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +73,18 @@ class UsersListActivity : AppCompatActivity() {
 
     private fun setupSearchToolbar() {
         setSupportActionBar(binding.historyToolbar)
+
+        // get saved night mode value from shared prefs, display appropriate drawable using this value
+        if(prefsRepo.getNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            binding.nightMode.setImageDrawable(getDrawable(R.drawable.ic_day))
+        } else {
+            binding.nightMode.setImageDrawable(getDrawable(R.drawable.ic_night))
+        }
+
+        binding.nightMode.setOnClickListener {
+            prefsRepo.toggleNightMode()
+        }
+
         // if search field is not empty, search for username among loaded items
         binding.search.setOnClickListener {
             val search = binding.editUsername.text.trim().toString()
@@ -107,7 +123,7 @@ class UsersListActivity : AppCompatActivity() {
                 }
             ))
             setLayoutManager(LinearLayoutManager(this@UsersListActivity))
-            addVeiledItems(20)
+            addVeiledItems(Const.PAGE_SIZE)
         }
 
         // Add a listener for the current state of paging

@@ -12,4 +12,5 @@
     <string name="saving_note">Saving note to DB…</string>
     <string name="note_saved">Note successfully saved.</string>
     <string name="note_error">Error saving note.</string>
+    <string name="toggle_day_night_mode">Toggle day/night mode</string>
 </resources>
